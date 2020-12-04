@@ -1,14 +1,16 @@
+package advance;
+
 import io.appium.java_client.android.AndroidDriver;
+import java.io.File;
 import java.net.URL;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
-public class Ch_03_02_Sessions_After {
-
-    private static final String APP = "https://github.com/cloudgrey-io/the-app/releases/download/v1.9.0/TheApp-v1.9.0.apk";
+public class Ch_03_03_Files_After {
     private static final String APPIUM = "http://localhost:4723/wd/hub";
+    private static final String ANDROID_PHOTO_PATH = "/mnt/sdcard/Pictures";
 
     private AndroidDriver driver;
 
@@ -16,10 +18,11 @@ public class Ch_03_02_Sessions_After {
     public void setUp() throws Exception {
         DesiredCapabilities caps = new DesiredCapabilities();
         caps.setCapability("platformName", "Android");
-        caps.setCapability("platformVersion", "9");
         caps.setCapability("deviceName", "Android Emulator");
         caps.setCapability("automationName", "UiAutomator2");
-        caps.setCapability("app", APP);
+        caps.setCapability("appPackage", "com.google.android.apps.photos");
+        caps.setCapability("appActivity", ".home.HomeActivity");
+        caps.setCapability("noReset", true);
         driver = new AndroidDriver(new URL(APPIUM), caps);
     }
 
@@ -31,7 +34,8 @@ public class Ch_03_02_Sessions_After {
     }
 
     @Test
-    public void test() {
-        System.out.println("Here's our test!");
+    public void testPhotos() throws Exception {
+        File image = new File("src/test/resources/image.jpg").getAbsoluteFile();
+        driver.pushFile(ANDROID_PHOTO_PATH + "/" + image.getName(), image);
     }
 }

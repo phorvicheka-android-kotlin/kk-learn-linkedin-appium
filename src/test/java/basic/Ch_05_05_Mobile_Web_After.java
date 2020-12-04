@@ -1,3 +1,5 @@
+package basic;
+
 import java.net.URL;
 import org.junit.After;
 import org.junit.Before;
@@ -17,11 +19,18 @@ public class Ch_05_05_Mobile_Web_After {
     @Before
     public void setUp() throws Exception {
         DesiredCapabilities caps = new DesiredCapabilities();
-        caps.setCapability("platformName", "iOS");
-        caps.setCapability("platformVersion", "12.2");
-        caps.setCapability("deviceName", "iPhone 8");
-        caps.setCapability("automationName", "XCUITest");
-        caps.setCapability("browserName", "Safari");
+//        caps.setCapability("platformName", "iOS");
+//        caps.setCapability("platformVersion", "12.2");
+//        caps.setCapability("deviceName", "iPhone 8");
+//        caps.setCapability("automationName", "XCUITest");
+//        caps.setCapability("browserName", "Safari");
+
+        caps.setCapability("platformName", "Android");
+        caps.setCapability("platformVersion", "9");
+        caps.setCapability("deviceName", "Android Emulator");
+        caps.setCapability("automationName", "UiAutomator2");
+        caps.setCapability("browserName", "Chrome");
+
         driver = new RemoteWebDriver(new URL(APPIUM), caps);
     }
 
@@ -36,8 +45,8 @@ public class Ch_05_05_Mobile_Web_After {
     public void test() {
         WebDriverWait wait = new WebDriverWait(driver, 10);
         driver.get("https://appiumpro.com");
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".toggleMenu"))).click();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#toggleMenu"))).click();
         driver.findElement(By.linkText("All Editions")).click();
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".editionList")));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".heroTitle___2pvXq")));
     }
 }

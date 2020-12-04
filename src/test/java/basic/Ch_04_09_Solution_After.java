@@ -1,12 +1,16 @@
+package basic;
+
+import io.appium.java_client.MobileBy;
 import io.appium.java_client.android.AndroidDriver;
 import java.net.URL;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class Ch_04_02_Locator_Strategies_Before {
-
+public class Ch_04_09_Solution_After {
     private static final String APP = "https://github.com/cloudgrey-io/the-app/releases/download/v1.9.0/TheApp-v1.9.0.apk";
     private static final String APPIUM = "http://localhost:4723/wd/hub";
 
@@ -21,7 +25,6 @@ public class Ch_04_02_Locator_Strategies_Before {
         caps.setCapability("automationName", "UiAutomator2");
         caps.setCapability("app", APP);
         driver = new AndroidDriver(new URL(APPIUM), caps);
-        try { Thread.sleep(3000); } catch (Exception ign) {}
     }
 
     @After
@@ -33,6 +36,12 @@ public class Ch_04_02_Locator_Strategies_Before {
 
     @Test
     public void test() {
-        System.out.println("Here's our test!");
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.presenceOfElementLocated(MobileBy.AccessibilityId("Echo Box"))).click();
+
+        wait.until(ExpectedConditions.presenceOfElementLocated(MobileBy.AccessibilityId("messageInput"))).sendKeys("hello world");
+        driver.findElement(MobileBy.AccessibilityId("messageSaveBtn")).click();
+
+        wait.until(ExpectedConditions.presenceOfElementLocated(MobileBy.AccessibilityId("hello world")));
     }
 }

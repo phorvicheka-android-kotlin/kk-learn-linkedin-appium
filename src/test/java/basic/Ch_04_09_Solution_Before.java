@@ -1,15 +1,14 @@
-import io.appium.java_client.MobileBy;
+package basic;
+
 import io.appium.java_client.android.AndroidDriver;
 import java.net.URL;
-import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class Ch_04_02_Locator_Strategies_After {
-
+public class Ch_04_09_Solution_Before {
     private static final String APP = "https://github.com/cloudgrey-io/the-app/releases/download/v1.9.0/TheApp-v1.9.0.apk";
     private static final String APPIUM = "http://localhost:4723/wd/hub";
 
@@ -23,10 +22,7 @@ public class Ch_04_02_Locator_Strategies_After {
         caps.setCapability("deviceName", "Android Emulator");
         caps.setCapability("automationName", "UiAutomator2");
         caps.setCapability("app", APP);
-        // start up our app using appium
         driver = new AndroidDriver(new URL(APPIUM), caps);
-        // wait for 3 seconds to make sure the app is fully loaded
-        try { Thread.sleep(3000); } catch (Exception ign) {}
     }
 
     @After
@@ -38,9 +34,6 @@ public class Ch_04_02_Locator_Strategies_After {
 
     @Test
     public void test() {
-        WebElement element = driver.findElement(MobileBy.AccessibilityId("Login Screen"));
-        System.out.println(element.toString());
-        List<WebElement> elements = driver.findElements(MobileBy.AccessibilityId("Login Screen"));
-        System.out.println(elements.size());
+        WebDriverWait wait = new WebDriverWait(driver, 10);
     }
 }
